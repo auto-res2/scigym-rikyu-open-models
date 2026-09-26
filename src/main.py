@@ -52,7 +52,8 @@ def main():
     cfg = yaml.safe_load(open("config/config.yaml"))
     cfg.update(cli)
     cfg["run"] = yaml.safe_load(open(f"config/run/{run_id}.yaml"))
-    cfg["workers"] = cfg["run"].get("workers", cfg["workers"])  # 生成が遅いモデルは並列度を上げる（API はバッチ処理で 1 要求あたりの速度が落ちない）
+    # 生成が遅いモデルは run の yaml で並列度と試行上限を上書きする（API はバッチ処理で 1 要求あたりの速度が落ちない）
+    cfg.update({k: v for k, v in cfg["run"].items() if k in ("workers", "instance_timeout")})
     cfg = SimpleNamespace(**cfg, run_model=cfg["run"]["model"])
     run_dir = Path(cfg.results_dir) / run_id
     instances = sorted(p for p in Path(cfg.data_dir).iterdir() if p.is_dir())

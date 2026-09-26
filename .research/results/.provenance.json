@@ -1,0 +1,21 @@
+{
+  "dirs": {
+    "kimi-k3": {
+      "execution_id": "8fe77ff0-f934-4c41-bab7-0be513f432a0",
+      "backend": "seyval",
+      "commit_hash": "00dd7f7900549b00aac71f53c4a454d9887d96c7",
+      "overrides": {
+        "run_id": "kimi-k3",
+        "mode": "full"
+      },
+      "parameters": {},
+      "files": {
+        ".research/results/kimi-k3/eval_inputs/scigym_small.json": "337c5f2e5e485528675e0ef00be495f9b29d3783211d852ecb1dc720e82dcf5d",
+        ".research/results/kimi-k3/evaluation/scigym_small.json": "63369a48d3d44a64292c443039f1bcc29d93c7f4c3a53e35d7ff22d8b590ce95",
+        ".research/results/kimi-k3/instances.tar.gz": "bfe6d11fd108a8423cc2a1e303f798c450077461cfba22db6af15556f04d18a4",
+        ".research/results/kimi-k3/metrics.json": "0bcfbee546aeb71c2538a1e51d0e2c448a98e201c77c95d73c09003954932a96",
+        ".research/results/kimi-k3/tokens.json": "ac8101778dab758aec1ecce549adfcd535fa4617afc7bc439f0a844dd1a96c08"
+      }
+    }
+  }
+}

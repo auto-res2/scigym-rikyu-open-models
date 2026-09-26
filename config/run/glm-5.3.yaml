@@ -1,1 +1,2 @@
 model: glm-5.3
+workers: 48

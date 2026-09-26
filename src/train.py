@@ -65,7 +65,7 @@ class OpenAICompatible(LLM):
                 f.write(json.dumps(response.model_dump(), ensure_ascii=False) + "\n")
             if choice.finish_reason == "length":  # thinking で使い切った。上限を上げて呼び直す
                 max_tokens = min(max_tokens * 2, 131072)
-            elif attempt >= 2:  # 何度呼んでも本文が空なら、gateway が reasoning 側に入れた文をそのまま返す
+            else:  # 本文が空で reasoning 側で終わっている応答は、コードブロックまで reasoning に入っている。その文を本文として返す
                 reasoning = getattr(choice.message, "reasoning_content", None) or getattr(choice.message, "reasoning", None)
                 if isinstance(reasoning, str) and len(reasoning) > 0:
                     text = reasoning

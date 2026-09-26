@@ -1,0 +1,106 @@
+\PassOptionsToPackage{numbers}{natbib}
+\documentclass{article}
+\usepackage{iclr2024_conference}
+\usepackage{luatexja-fontspec}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\graphicspath{{../}}
+
+\InputIfFileExists{values.tex}{}{}
+\providecommand{\airasval}[1]{\textbf{??airasval:\detokenize{#1}??}}
+\providecommand{\unverified}[1]{#1}
+\providecommand{\airasrecordlink}[1]{#1}
+
+\title{SciGym-small における open-weight モデルの事前登録評価: RIKYU の推論 API で提供される 8 モデルは論文の GPT-4.1-mini に届くか}
+\author{AIRAS}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+SciGym \citep{duan-2025-measuring} は、反応をすべて取り除いた SBML モデルを LLM エージェントに渡し、摂動実験とコード実行を繰り返して反応機構を復元させるベンチマークである。論文の Table 1 は 3 社のフロンティアモデル 6 つを SciGym-small 137 件で各 1 回走らせた平均値を報告しているが、open-weight モデルは含まれていない。本研究は、公開コードの Controller と評価器をそのまま用い、理研の計算機 RIKYU の推論 API で提供される open-weight 8 モデル（deepseek-v4.1-flash、glm-5.2、glm-5.3、glm-5.3-flash、kimi-k2.6、kimi-k3、qwen3.6-35b、qwen3.8-27b）を同じプロトコルで評価する。実験前に、(1) GLM-5.3 系を除く 6 モデルの平均 Simulation Trajectory Error（STE）が論文の GPT-4.1-mini の 0.6007 を 0.05 より大きくは上回らないこと、(2) glm-5.3 の平均 STE が glm-5.3-flash 以下であること、を反証線として登録する。Reaction Matching Score（RMS）と Network Topology Score（NTS）は同じ実行から表として報告する。実行は RIKYU（aarch64）上で行い、論文設定からの逸脱（libroadrunner 2.7.0、応答トークン上限、推論 API の提供形態）はすべて実験前に宣言する。
+\end{abstract}
+
+\section{はじめに}
+\label{sec:intro}
+LLM に科学的発見のサイクル全体（実験の設計、結果の解析、機構の提案）を行わせて測るベンチマークとして、SciGym \citep{duan-2025-measuring} が提案された。BioModels 由来の SBML モデルから反応をすべて取り除いたものをエージェントに渡し、エージェントは初期濃度を変えた摂動実験を要求し、返ってきた時系列を Python で解析し、最終的な SBML を提出する。提出モデルは真のモデルと、軌道誤差（STE）と反応の一致度（RMS）で比較される。
+
+論文の主結果である Table 1 は、3 社の pro / mini 計 6 モデルを SciGym-small の 137 件で評価した平均値である \cite[s1.p2, s1.p10]{duan-2025-measuring}。評価対象はすべて商用 API のモデルであり \cite[s1.p1]{duan-2025-measuring}、open-weight モデルがこの閉ループの課題でどこまで到達するかは示されていない。open-weight モデルは自前の計算機で動かせるため API 費用がかからず、版が固定されるので再現もしやすい。本研究では、理研の計算機 RIKYU の推論 API（OpenAI 互換）で提供される 8 モデルを、公開コード \citep{h4duan-2025-scigym} の Controller をそのまま使って同じプロトコルで評価する。
+
+判定は AIRAS の事前登録の枠組みに従い、仮説・判定基準・予測区間・実行条件を実験前に記録へ凍結し、実験後は計測値だけを流し込む。比較対象は論文 Table 1 の値であり、本研究では商用モデルを再実行しない。
+
+\section{関連研究}
+\label{sec:related}
+SciGym \citep{duan-2025-measuring} は、単一スキルを測る既存のベンチマークと異なり、エージェントが自ら摂動実験を設計してその結果を受け取る閉ループを評価する。評価指標は 3 つで、種間の相互作用の F1（NTS）、反応物と生成物の集合が一致した反応の適合率・再現率・F1（RMS。modifier まで要求する厳格版もある）\cite[s1.p8]{duan-2025-measuring}、および全種の時系列の対称平均絶対パーセント誤差（STE）\cite[s1.p9]{duan-2025-measuring} である。
+
+論文は pro モデルが mini モデルを一貫して上回り \cite[s1.p6]{duan-2025-measuring}、Gemini-Pro が最良であった \cite[s1.p7]{duan-2025-measuring} と報告している。本研究の仮説 2 は、この pro と mini の関係が open-weight の同一ファミリー（glm-5.3 と glm-5.3-flash）でも成り立つかを問う。
+
+\section{仮説と予測}
+\label{sec:hypothesis}
+以下は記録（record.json）から生成された仮説・主張・判定基準・予測区間の一覧である。実験後は Observed と Verdict が計測値から埋められる。
+
+\input{claims.tex}
+
+\paragraph{判定基準と予測区間の根拠.}
+仮説 1 の各主張の反証線は「（当該モデルの平均 STE）$-$（論文の GPT-4.1-mini の STE）$\le 0.05$」である。GPT-4.1-mini は論文 Table 1 の 6 モデルのうち Claude-3.5-Haiku に次いで STE が大きく、「フロンティアモデルの mini 版に届く」ことの最低線として選んだ。0.05 は、論文 Table 1 で隣り合うモデルの最小差（Gemini-2.5-Pro の \unverified{0.3212} と Claude-3.7-Sonnet の \unverified{0.3615} の差 \unverified{0.04}）とほぼ同じで、1 件の STE の標準偏差を 0.27 程度と見積もったときの 137 件平均の標準誤差（約 0.02）の 2 倍強にあたる。予測区間は $[-0.30, 0]$ とし、2026 年の open-weight thinking モデルは論文の pro と mini の間に入ると見込む。
+
+仮説 2 の反証線は「glm-5.3 の平均 STE $-$ glm-5.3-flash の平均 STE $\le 0$」である。論文 Table 1 の pro と mini の STE 差は Gemini で $-0.097$、GPT で $-0.140$ であり、予測区間は $[-0.15, -0.02]$ とする。2 つの 1 回実行の差の標準誤差は約 0.03 なので、差が 0.02 未満のときは結論が揺らぎうることを前提として記録する。
+
+RMS（modifier あり / なし）と NTS も同じ実行から表として報告するが、1 つの主張に置ける判定基準は 1 つであるため、判定には用いない。
+
+\section{方法}
+\label{sec:method}
+\paragraph{タスク.}
+各インスタンスは真の SBML（\texttt{truth.xml}）、反応を取り除いた不完全な SBML（\texttt{partial.xml}）、シミュレーション条件（\texttt{truth.sedml}）からなる。エージェントは不完全な SBML を受け取り、各ターンで実験（初期濃度の変更を指定し、真のモデルの時系列を得る）、コード実行（numpy / pandas / scipy / libsbml と、仮説モデルを走らせる \texttt{simulate} 関数が使える）、提出のいずれかを markdown 形式で返す。提出は任意の時点で行え、反復数の上限は 20 である \cite[s1.p3]{duan-2025-measuring}。提出した SBML が無効な場合は追加のデバッグ反復が許され、それでも無効なら不完全 SBML のまま採点される \cite[s1.p4]{duan-2025-measuring}。
+
+\paragraph{実行系.}
+ループ、プロンプト、実験の実行はすべて公開コード \citep{h4duan-2025-scigym} の \texttt{Controller} をそのまま用いる。本研究が書くのは、(1) OpenAI 互換 API でモデルを呼ぶ \texttt{LLM} 実装（公式の GPT 実装と同じく、システムプロンプトと全履歴を毎回送る）、(2) インスタンスごとに 1 プロセスで Controller を起動し、137 件を並列に走らせる駆動部、(3) 各インスタンスの提出モデルと公式データを評価層の入力ファイルに書き出す部分だけである。公式コードでは履歴がクラス属性として定義されており 1 プロセスで複数件を走らせると履歴が持ち越されるが、1 件 1 プロセスとすることでこの問題を避ける。
+
+\paragraph{指標.}
+採点は評価層 airas-eval のベンチマークパック \texttt{scigym\_small} が行う。パックは公式リリースの 137 件（truth / partial / sedml）を sha256 で固定し、公開コードの \texttt{Evaluator}（コミット 88a7b93）で提出モデルを採点して、STE（\texttt{trajectory\_smape}）、RMS の適合率・再現率・F1（modifier なし \texttt{reaction\_*}、あり \texttt{reaction\_*\_with\_modifiers}）、NTS の F1（\texttt{topology\_f1}）を 137 件の単純平均で返す。提出 SBML が無い、または無効な件は、公式評価どおり不完全 SBML の採点値で平均に含める。
+
+\section{実験設計}
+\label{sec:design}
+\paragraph{モデル.}
+RIKYU の推論 API が提供する 8 モデルをすべて用いる: deepseek-v4.1-flash、glm-5.2、glm-5.3、glm-5.3-flash、kimi-k2.6、kimi-k3、qwen3.6-35b、qwen3.8-27b。いずれも思考（thinking）を出力するモデルである。各モデルの量子化や serving の設定は公開されておらず、公開重みと同等の能力を持つことを仮説の前提として記録する。
+
+\paragraph{データ.}
+SciGym-small の 137 件 \cite[s1.p2]{duan-2025-measuring}（Hugging Face \texttt{h4duan/scigym-sbml} の small split と同一内容の RIKYU 上のコピー）を用いる。評価層は各件の内容を公式リリースの sha256 と照合する。
+
+\paragraph{設定.}
+\texttt{max\_iterations} は論文どおり 20 \cite[s1.p3]{duan-2025-measuring}（公開 config の既定値は 5 \cite[s2.p2]{h4duan-2025-scigym}）、\texttt{eval\_debug\_rounds} は論文本文の 3 \cite[s1.p4]{duan-2025-measuring}（公開 config の既定値は 5 \cite[s2.p3]{h4duan-2025-scigym}）、\texttt{temperature} は公開 config の 1.0 \cite[s2.p1]{h4duan-2025-scigym}、摂動は初期濃度の変更のみとする。応答のトークン上限は 32768 とする。公式の GPT 実装の既定値 8192 では、思考トークンを出すモデルが本文を返せずに失敗しうるためである。本文が空で返った呼び出しは最大 3 回まで呼び直す。各モデル、各インスタンスを 1 回ずつ実行する。
+
+\paragraph{計算資源と環境.}
+実行は Seyval を通じて RIKYU（Slurm、GB200 ノード、aarch64）で行い、LLM は同じ RIKYU の推論 API を呼ぶ。GPU は使わないが、資源の単位が GPU であるため 1 GPU を要求する。環境は Dockerfile と \texttt{uv.lock} で固定する。aarch64 向けの wheel が無いため、libroadrunner は公式の 2.8.0 ではなく 2.7.0、antimony は 2.14.0 を用い、rrplugins と phrasedml は除外する。この差でシミュレーション結果がわずかに変わる可能性があり、仮説の前提として記録する。
+
+\paragraph{段階.}
+sanity は 1 件（BIOMD0000000027）を 2 反復で走らせて配管を確かめる。pilot は sorted した 137 件から 14 件おきに選んだ 10 件を 20 反復で走らせ、1 件あたりの所要時間と推論 API の処理能力を測って全件実行の並列度を決める。主張の判定は full（137 件）の結果だけで行い、sanity と pilot の結果は記録に取り込まない。
+
+\paragraph{run と主張の対応.}
+\texttt{deepseek-v4.1-flash} $\to$ Claim 1、\texttt{glm-5.2} $\to$ Claim 2、\texttt{kimi-k2.6} $\to$ Claim 3、\texttt{kimi-k3} $\to$ Claim 4、\texttt{qwen3.6-35b} $\to$ Claim 5、\texttt{qwen3.8-27b} $\to$ Claim 6、\texttt{glm-5.3} と \texttt{glm-5.3-flash} $\to$ Claim 7。
+
+% ===== airas: post-experiment sections, filled once runs exist =====
+
+\section{結果}
+\label{sec:results}
+実験は未実施である。実行後にこの節へ、各 run の平均 STE、GPT-4.1-mini との差、RMS、NTS を \texttt{table1} として、また各主張の判定基準に対する計測値を記入する。
+
+\section{考察}
+\label{sec:discussion}
+実験は未実施である。
+
+\section{結論}
+\label{sec:conclusion}
+実験は未実施である。
+
+\section*{データの利用可能性}
+記録は \airasrecordlink{record.json} にある。実験コード、環境の固定（Dockerfile と \texttt{uv.lock}）、各 run の結果と provenance は同じリポジトリに含まれる。
+
+\bibliographystyle{iclr2024_conference}
+\bibliography{references}
+
+\end{document}

@@ -61,8 +61,15 @@ class OpenAICompatible(LLM):
                 break
             usage = response.usage.model_dump() if response.usage else None
             print(f"empty response: finish_reason={choice.finish_reason} max_tokens={max_tokens} usage={usage}", flush=True)
+            with open(self.empty_log, "a") as f:  # 本文が空の生応答を残す（gateway の reasoning 解析のずれを疑っている）
+                f.write(json.dumps(response.model_dump(), ensure_ascii=False) + "\n")
             if choice.finish_reason == "length":  # thinking で使い切った。上限を上げて呼び直す
                 max_tokens = min(max_tokens * 2, 131072)
+            elif attempt >= 2:  # 何度呼んでも本文が空なら、gateway が reasoning 側に入れた文をそのまま返す
+                reasoning = getattr(choice.message, "reasoning_content", None) or getattr(choice.message, "reasoning", None)
+                if isinstance(reasoning, str) and len(reasoning) > 0:
+                    text = reasoning
+                    break
         assert isinstance(text, str) and len(text) > 0, "empty response"
         self.add_message("assistant", text)
         usage = response.usage
@@ -85,6 +92,7 @@ def main():
         eval_debug_rounds=cfg["eval_debug_rounds"],
         temperature=cfg["temperature"],
     )
+    OpenAICompatible.empty_log = out / "empty_responses.jsonl"
     llm = OpenAICompatible(
         model_name=cfg["model"],
         api_key="",

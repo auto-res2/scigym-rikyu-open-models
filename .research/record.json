@@ -35,6 +35,11 @@
               "text_sha256": "f2b6e743fbbca58621a03c60ad269aa3765142476376f80531d5b47e4d3a4dc7",
               "model": "gpt-4.1",
               "supported": true
+            },
+            {
+              "text_sha256": "6340ba698704696b55ff58a5f3039e0345643184ca3622ccc95aebe113211a5a",
+              "model": "gpt-4.1",
+              "supported": true
             }
           ]
         },
@@ -47,6 +52,11 @@
               "text_sha256": "4bd14d32a3be6184688e08a37048bba190762c34821cf097d7696cd278217f46",
               "model": "gpt-4.1",
               "supported": true
+            },
+            {
+              "text_sha256": "6340ba698704696b55ff58a5f3039e0345643184ca3622ccc95aebe113211a5a",
+              "model": "gpt-4.1",
+              "supported": true
             }
           ]
         },
@@ -57,6 +67,11 @@
           "judgments": [
             {
               "text_sha256": "4ab7f355239feb0a3b8b3b01fc1b1206b36420fde543d3e69febce4dd8319930",
+              "model": "gpt-4.1",
+              "supported": true
+            },
+            {
+              "text_sha256": "de3f57a7770e8fb0430d16913d9e62aa863e41289e486c44ba5e356ce467aea1",
               "model": "gpt-4.1",
               "supported": true
             }
@@ -74,6 +89,11 @@
             },
             {
               "text_sha256": "61e344e75bf4d37a55dfa8445c5e0a76499ac03a758fd83f46176c1704348837",
+              "model": "gpt-4.1",
+              "supported": true
+            },
+            {
+              "text_sha256": "de3f57a7770e8fb0430d16913d9e62aa863e41289e486c44ba5e356ce467aea1",
               "model": "gpt-4.1",
               "supported": true
             }
@@ -143,6 +163,11 @@
               "model": "gpt-4.1",
               "supported": false,
               "reason": "The citing text claims Table 1 reports mean scores for 137 SciGym-small instances, but the cited passage only states it reports averages across all benchmark instances without specifying the instance count or their SciGym-small identity."
+            },
+            {
+              "text_sha256": "6340ba698704696b55ff58a5f3039e0345643184ca3622ccc95aebe113211a5a",
+              "model": "gpt-4.1",
+              "supported": true
             }
           ]
         }
@@ -176,6 +201,12 @@
               "text_sha256": "61e344e75bf4d37a55dfa8445c5e0a76499ac03a758fd83f46176c1704348837",
               "model": "gpt-4.1",
               "supported": true
+            },
+            {
+              "text_sha256": "de3f57a7770e8fb0430d16913d9e62aa863e41289e486c44ba5e356ce467aea1",
+              "model": "gpt-4.1",
+              "supported": true,
+              "reason": "The citing text accurately states that the published config has temperature: 1.0, matching the cited passage in its context."
             }
           ]
         },
@@ -189,6 +220,11 @@
               "model": "gpt-4.1",
               "supported": false,
               "reason": "The source shows the default config for max_iterations is 5, but does not mention whether 5 is only for operation checks, nor does it contrast 5 with a value of 20 as in the paper's main experiments."
+            },
+            {
+              "text_sha256": "de3f57a7770e8fb0430d16913d9e62aa863e41289e486c44ba5e356ce467aea1",
+              "model": "gpt-4.1",
+              "supported": true
             }
           ]
         },
@@ -199,6 +235,11 @@
           "judgments": [
             {
               "text_sha256": "61e344e75bf4d37a55dfa8445c5e0a76499ac03a758fd83f46176c1704348837",
+              "model": "gpt-4.1",
+              "supported": true
+            },
+            {
+              "text_sha256": "de3f57a7770e8fb0430d16913d9e62aa863e41289e486c44ba5e356ce467aea1",
               "model": "gpt-4.1",
               "supported": true
             }

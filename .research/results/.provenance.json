@@ -50,6 +50,21 @@
         ".research/results/qwen3.6-35b/metrics.json": "99b743f89ce0c6aa384d5aa940135ff8906de8dbac5c8a48e2d1727a1e8bf094",
         ".research/results/qwen3.6-35b/tokens.json": "196e60c42c65baa7d54f0aa35c1edd3853e450bdad7de4fe1bfffd99ac395e2d"
       }
+    },
+    "deepseek-v4.1-flash": {
+      "execution_id": "ebf2eff0-6974-444f-8744-d911a9496746",
+      "backend": "seyval",
+      "commit_hash": "ec2226eb645754522e79f4e7de694dc08a9cf105",
+      "overrides": {
+        "run_id": "deepseek-v4.1-flash",
+        "mode": "full"
+      },
+      "parameters": {},
+      "files": {
+        ".research/results/deepseek-v4.1-flash/eval_inputs/scigym_small.json": "c49eafff268d8cb1c787fb5b8e9e3638639c417ad10b4bb4454bf54583c4b837",
+        ".research/results/deepseek-v4.1-flash/instances.tar.gz": "cb8611345344efb1aba37b1cf53822fd0733a5953a9304765a8f7a9c3fa760be",
+        ".research/results/deepseek-v4.1-flash/tokens.json": "7d07884c129a8377e7e3ac6b581177369c89df222480fbd6081a4883519cb802"
+      }
     }
   }
 }

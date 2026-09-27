@@ -40,6 +40,11 @@
               "text_sha256": "6340ba698704696b55ff58a5f3039e0345643184ca3622ccc95aebe113211a5a",
               "model": "gpt-4.1",
               "supported": true
+            },
+            {
+              "text_sha256": "cab92addecfe32734f0b83f2ee8d056a6f8006931f30e7a68b6bf74c4461e2b5",
+              "model": "gpt-4.1",
+              "supported": true
             }
           ]
         },
@@ -102,7 +107,21 @@
         {
           "id": "s1.p5",
           "node_type": "result",
-          "quote": "Gemini-2.5-Flash 0.4181 0.1527 0.1071 0.1217 0.2399 0.1839 0.2005 GPT-4.1-mini 0.6007 0.1516 0.1253 0.1320 0.2530 0.2313 0.2322 Claude-3.5-Haiku 0.6281 0.0858 0.0421 0.0530 0.1454 0.0805 0.0987 Gemini-2.5-Pro 0.3212 0.2138 0.1664 0.1817 0.3781 0.3219 0.3383 GPT-4.1 0.4611 0.2067 0.1597 0.1740 0.3517 0.2888 0.3038 Claude-3.7-Sonnet 0.3615 0.1780 0.1698 0.1688 0.3160 0.3170 0.3047"
+          "quote": "Gemini-2.5-Flash 0.4181 0.1527 0.1071 0.1217 0.2399 0.1839 0.2005 GPT-4.1-mini 0.6007 0.1516 0.1253 0.1320 0.2530 0.2313 0.2322 Claude-3.5-Haiku 0.6281 0.0858 0.0421 0.0530 0.1454 0.0805 0.0987 Gemini-2.5-Pro 0.3212 0.2138 0.1664 0.1817 0.3781 0.3219 0.3383 GPT-4.1 0.4611 0.2067 0.1597 0.1740 0.3517 0.2888 0.3038 Claude-3.7-Sonnet 0.3615 0.1780 0.1698 0.1688 0.3160 0.3170 0.3047",
+          "judgments": [
+            {
+              "text_sha256": "cad6ce2ace47860ebd47097b201a0e9d42b336f05a69562d7538f6413d9ba785",
+              "model": "gpt-4.1",
+              "supported": true,
+              "reason": "The citing text faithfully reproduces the reported average STE value for GPT-4.1-mini (0.6007) from the source table and attributes it correctly to Table 1 in the cited source."
+            },
+            {
+              "text_sha256": "3d634a07a9c72f8454c3a32e3b3854e42b90651e5068098f3c5b4e695d8fa47d",
+              "model": "gpt-4.1",
+              "supported": true,
+              "reason": "The citing text accurately refers to the RMS F1 values (with and without modifiers) for Gemini-2.5-Pro, as found in Table 1 of the cited passage, and correctly states that these are the best values reported for the corresponding columns."
+            }
+          ]
         },
         {
           "id": "s1.p6",
@@ -125,6 +144,12 @@
               "text_sha256": "ccd1a3186987da233cfda67b0a166bea42cd6ec91c9cbad141771a80f6a1feb6",
               "model": "gpt-4.1",
               "supported": true
+            },
+            {
+              "text_sha256": "738dd064537f1387e5c4a3c92368ac3e29458f6ad4e6388bd5f61ba4118b3ec6",
+              "model": "gpt-4.1",
+              "supported": false,
+              "reason": "The citing text gives an exact value (0.3212) for Gemini-2.5-Pro's performance, but the quoted passage only gives a qualitative statement—no such numeric value is in context."
             }
           ]
         },
@@ -138,6 +163,12 @@
               "model": "gpt-4.1",
               "supported": true,
               "reason": "The citing text faithfully summarizes the passage's description of RMS, including both the standard and stricter versions with matching modifiers required."
+            },
+            {
+              "text_sha256": "3d634a07a9c72f8454c3a32e3b3854e42b90651e5068098f3c5b4e695d8fa47d",
+              "model": "gpt-4.1",
+              "supported": true,
+              "reason": "The citing text accurately refers to two versions of the RMS: standard (no modifier) and a stricter version requiring matching modifiers, as described in the quoted passage and its context."
             }
           ]
         },

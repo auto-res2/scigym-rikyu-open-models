@@ -64,11 +64,9 @@ def main():
     elif cfg.mode == "pilot":
         instances = instances[::14]
     stage = cfg.mode.upper()
-    # 失敗した前 run の件ごとの出力（resume/<run_id>/ に置く。.research/results は実行イメージに入らない）から続きを実行する
-    resume = Path("resume") / run_id / "instances.tar.gz"
-    if resume.exists() and not (run_dir / "instances").exists():
-        run_dir.mkdir(parents=True, exist_ok=True)
-        with tarfile.open(resume) as tar:
+    # 失敗した前 run の件ごとの出力（取り込み済みの instances.tar.gz が実行時の作業ディレクトリに入る）から続きを実行する
+    if (run_dir / "instances.tar.gz").exists() and not (run_dir / "instances").exists():
+        with tarfile.open(run_dir / "instances.tar.gz") as tar:
             tar.extractall(run_dir)
     # API エラーで evaluation.json が出なかった件は 2 回までやり直す。予算超過（402）は即座に run を止める
     for _ in range(3):

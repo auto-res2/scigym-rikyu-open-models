@@ -120,6 +120,12 @@
               "model": "gpt-4.1",
               "supported": true,
               "reason": "The citing text accurately refers to the RMS F1 values (with and without modifiers) for Gemini-2.5-Pro, as found in Table 1 of the cited passage, and correctly states that these are the best values reported for the corresponding columns."
+            },
+            {
+              "text_sha256": "cf105d9baed4844d3d00dd309406a15a18441d4103853b626c7d2c730c42016a",
+              "model": "gpt-4.1",
+              "supported": true,
+              "reason": "The citing text faithfully reports the Gemini-2.5-Pro SCIGYM Table 1 Simulation Trajectory Error (0.3212), which matches the quoted passage and its context."
             }
           ]
         },

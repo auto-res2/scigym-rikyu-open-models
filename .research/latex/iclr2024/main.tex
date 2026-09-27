@@ -22,7 +22,7 @@
 \maketitle
 
 \begin{abstract}
-SciGym \citep{duan-2025-measuring} は、反応をすべて取り除いた SBML モデルを LLM エージェントに渡し、摂動実験とコード実行を繰り返して反応機構を復元させるベンチマークである。論文の Table 1 は 3 社のフロンティアモデル 6 つを SciGym-small 137 件で各 1 回走らせた平均値を報告しているが、open-weight モデルは含まれていない。本研究は、公開コードの Controller と評価器をそのまま用い、理研の計算機 RIKYU の推論 API で提供される open-weight 8 モデル（deepseek-v4.1-flash、glm-5.2、glm-5.3、glm-5.3-flash、kimi-k2.6、kimi-k3、qwen3.6-35b、qwen3.8-27b）を同じプロトコルで評価する。実験前に、(1) GLM-5.3 系を除く 6 モデルの平均 Simulation Trajectory Error（STE）が論文の GPT-4.1-mini の 0.6007 を 0.05 より大きくは上回らないこと、(2) glm-5.3 の平均 STE が glm-5.3-flash 以下であること、を反証線として登録する。Reaction Matching Score（RMS）と Network Topology Score（NTS）は同じ実行から表として報告する。実行は RIKYU（aarch64）上で行い、論文設定からの逸脱（libroadrunner 2.7.0、応答トークン上限、推論 API の提供形態）はすべて実験前に宣言する。
+SciGym \citep{duan-2025-measuring} は、反応をすべて取り除いた SBML モデルを LLM エージェントに渡し、摂動実験とコード実行を繰り返して反応機構を復元させるベンチマークである。論文の Table 1 は 3 社のフロンティアモデル 6 つを SciGym-small 137 件で各 1 回走らせた平均値を報告しているが、open-weight モデルは含まれていない。本研究は、公開コードの Controller と評価器をそのまま用い、理研の計算機 RIKYU の推論 API で提供される open-weight 8 モデル（deepseek-v4.1-flash、glm-5.2、glm-5.3、glm-5.3-flash、kimi-k2.6、kimi-k3、qwen3.6-35b、qwen3.8-27b）を同じプロトコルで評価する。実験前に、(1) GLM-5.3 系を除く 6 モデルの平均 Simulation Trajectory Error（STE）が論文の GPT-4.1-mini の 0.6007 を 0.05 より大きくは上回らないこと、(2) glm-5.3 の平均 STE が glm-5.3-flash 以下であること、を反証線として登録する。Reaction Matching Score（RMS）と Network Topology Score（NTS）は同じ実行から表として報告する。実行は RIKYU（aarch64）上で行い、論文設定からの逸脱（libroadrunner 2.7.0、応答トークン上限、推論 API の提供形態）はすべて実験前に宣言する。実験の結果、完走した 5 モデル（deepseek-v4.1-flash、kimi-k2.6、kimi-k3、qwen3.6-35b、qwen3.8-27b）はすべて GPT-4.1-mini の水準に届き、うち 4 モデルは論文 Table 1 の最良値（Gemini-2.5-Pro、STE 0.3212）も上回った。GLM 系 3 モデルは推論 API の生成速度の問題で期限内に終わらず打ち切ったため、仮説 2 は判定できなかった。
 \end{abstract}
 
 \section{はじめに}
@@ -87,15 +87,43 @@ sanity は 1 件（BIOMD0000000027）を 2 反復で走らせて配管を確か�
 
 \section{結果}
 \label{sec:results}
-実験は未実施である。実行後にこの節へ、各 run の平均 STE、GPT-4.1-mini との差、RMS、NTS を \texttt{table1} として、また各主張の判定基準に対する計測値を記入する。
+表~\ref{tab:table1} に、完走した 5 モデルの SciGym-small 137 件に対する平均 STE、論文 Table 1 の GPT-4.1-mini（\unverified{0.6007}）\cite[s1.p5]{duan-2025-measuring} との差、RMS の F1（modifier なし / あり）、NTS の F1 を示す。各値は評価層 \texttt{scigym\_small} のレポートから記録経由で流し込んだものである。
+
+{\small\input{tables/table1.tex}}
+
+\paragraph{主張の判定.}
+仮説 1 の各主張の反証線は「（当該モデルの平均 STE）$-$ \unverified{0.6007} $\le 0.05$」である（第\ref{sec:hypothesis}節）。平均 STE は kimi-k2.6 が \airasval{kimi-k2.6.trajectory_smape}、kimi-k3 が \airasval{kimi-k3.trajectory_smape}、deepseek-v4.1-flash が \airasval{deepseek-v4.1-flash.trajectory_smape}、qwen3.8-27b が \airasval{qwen3.8-27b.trajectory_smape}、qwen3.6-35b が \airasval{qwen3.6-35b.trajectory_smape} であり、Claim 1、3、4、5、6 はいずれも基準を満たした。GPT-4.1-mini との差は $-0.39$ から $-0.14$ で、事前に宣言した予測区間 $[-0.30, 0]$ を kimi-k2.6、kimi-k3、deepseek-v4.1-flash、qwen3.8-27b の 4 モデルで下に外れた。すなわち、これらのモデルは予測より大きく GPT-4.1-mini を引き離し、論文 Table 1 で最良だった Gemini-2.5-Pro の \unverified{0.3212} \cite[s1.p5]{duan-2025-measuring} も下回った。qwen3.6-35b だけが予測区間の内側で、5 モデルの中では最も弱い。
+
+Claim 2（glm-5.2）と Claim 7（glm-5.3 と glm-5.3-flash、仮説 2）は、対応する run が期限内に終わらず打ち切ったため結果がなく、判定は保留（inconclusive）である。経緯は記録の notes に残した。
+
+\paragraph{RMS と NTS.}
+modifier なしの RMS F1 は kimi-k3 \airasval{kimi-k3.reaction_f1}、deepseek-v4.1-flash \airasval{deepseek-v4.1-flash.reaction_f1}、kimi-k2.6 \airasval{kimi-k2.6.reaction_f1}、qwen3.8-27b \airasval{qwen3.8-27b.reaction_f1}、qwen3.6-35b \airasval{qwen3.6-35b.reaction_f1} で、論文 Table 1 の GPT-4.1-mini（\unverified{0.2322}）はもちろん、最良の Gemini-2.5-Pro（\unverified{0.3383}）\cite[s1.p5]{duan-2025-measuring} も qwen3.6-35b を除く 4 モデルが上回った。modifier ありの厳格版 \cite[s1.p8]{duan-2025-measuring} でも同じ 4 モデルが論文最良の \unverified{0.1817} を上回る。STE の順位（kimi-k2.6 $<$ kimi-k3 $<$ deepseek-v4.1-flash $<$ qwen3.8-27b $<$ qwen3.6-35b）と RMS F1 の順位（kimi-k3 $>$ deepseek-v4.1-flash $>$ kimi-k2.6 $>$ qwen3.8-27b $>$ qwen3.6-35b）は上位で入れ替わり、kimi-k2.6 は軌道は最もよく合うが反応の一致は 3 位である。NTS の F1 は kimi-k2.6 が \airasval{kimi-k2.6.topology_f1} と突出しており、反応の分割は違っても種間の相互作用の構造はよく捉えている。
+
+\paragraph{完走件数とトークン.}
+表~\ref{tab:tokens} に各 run の有効提出件数とトークン消費を示す。有効な SBML が提出された件数は kimi-k2.6 の \airasval{kimi-k2.6.n_valid_submissions} 件から qwen3.6-35b と qwen3.8-27b の \airasval{qwen3.6-35b.n_valid_submissions} 件までで、残りは提出モデルが無効か、3 回の試行とも LLM のコードが ODE 計算の中で止まって打ち切られた件であり、公式評価どおり不完全モデルの採点値で平均に含めた。入力トークンは kimi-k2.6 が他の 2〜3 倍で、これは本文が空の応答（後述）の呼び直し分を含む。
+
+\input{tables/tokens.tex}
+
+\paragraph{実行で起きたこと.}
+事前登録した設計からの逸脱と、実行中に判明した事実を記す。第一に、thinking を出力するモデル（特に kimi-k2.6）は、\texttt{finish\_reason} が \texttt{stop} なのに本文（\texttt{content}）が空で、思考（\texttt{reasoning\_content}）の中にコードブロックまで含む回答が入った応答を返すことがあった。実験コードはこの応答を最初の 1 回で思考の文を本文として Controller に渡した。形式が合わなければ公式の手順どおり Controller がやり直しを求めるので、ベンチマークの規約は変えていない。上限（32768 トークン）で切れた応答は上限を倍にして呼び直した。生の空応答はすべて各件の \texttt{empty\_responses.jsonl} として保存してある。第二に、1 件 1 試行の上限は当初 1.5 時間としたが、thinking モデルは 20 反復に 2〜4 時間かかり、上限で打ち切られて最初からやり直す件が続出したため、途中で 4 時間（GLM 系は 12 時間）に延ばした。第三に、deepseek-v4.1-flash の最初の run は 136 件が完走し、1 件（BIOMD0000000783）だけが 3 回とも ODE 計算の中で止まって打ち切られ、実験コードが run 全体を失敗と判定して評価に進まなかった。公式の規約では有効な提出がない件は不完全モデルで採点されるので、136 件の出力をそのまま引き継ぎ、打ち切りの 1 件を提出なしとして評価だけを行う run を投げ直した。LLM の呼び出しはやり直していない。第四に、GLM 系の 3 モデルは、RIKYU の推論 API での生成速度（glm-5.3 で約 15 tok/s、glm-5.2 で約 55 tok/s、glm-5.3-flash で約 130 tok/s）と断続的な 502 のため、並列度と試行上限を上げて投げ直しても期限内に終わる見込みが立たず、それぞれ 5 件、13 件、14 件が完走した時点で利用者の判断により打ち切った。途中までの件で集計することはしない。第五に、qwen3.6-35b の推論 API は約 1 日にわたり 1 語の要求にも応答せず、復旧後に実行した。
 
 \section{考察}
 \label{sec:discussion}
-実験は未実施である。
+\paragraph{open-weight モデルは論文の商用モデルの水準を超えていた.}
+仮説 1 は「GPT-4.1-mini の水準に届く」という控えめな線で置いたが、完走した 5 モデルはすべてこれを満たし、4 モデルは論文 Table 1 の最良値をも STE と RMS の両方で上回った。論文の評価は 2025 年前半のモデルによるものであり \cite[s1.p1]{duan-2025-measuring}、1 年後の open-weight thinking モデルが同じ閉ループの課題でそれを超えることは、予測区間を下に外れた事実が示すように、本研究の事前の見込みよりも明確であった。ただし比較対象は論文値の転記であり、本研究で商用モデルを再実行してはいない。先行する Table 1 再現では GPT-4.1-mini の平均 STE は論文とほぼ一致し、GPT-4.1 は 0.05 程度、Gemini-2.5-Pro は実行事故を含めて 0.09 程度動いたので、0.1 を超える差は実行の揺らぎでは説明できないと考える。
+
+\paragraph{規模と世代.}
+5 モデルの中で最も小さい qwen3.8-27b（27B）が kimi-k3 や deepseek-v4.1-flash と 0.02 差に並ぶ一方、より大きい qwen3.6-35b は STE で 0.2 以上劣る。同じ Qwen 系でも世代（3.6 と 3.8）の差がパラメータ数の差より大きく効いており、この課題で効いているのは規模よりも思考を伴う探索とコード生成の訓練の世代だと読める。仮説 2（同一ファミリーの大小関係）はこの読みを直接検証するはずだったが、判定できなかった。
+
+\paragraph{thinking モデルを既存のベンチマークで動かすときの落とし穴.}
+本研究で最も時間を費やしたのは、モデルの能力ではなく serving と実験コードの周辺であった。本文が空で思考に回答が入る応答は、公式実装のように本文だけを読む実装では「空応答」として失敗し、モデルの実力が過小に見える。上限で切れた思考も同じである。また 1 反復に数分かかるモデルでは、1 件の試行に数時間を要し、試行上限と再試行の設計が結果の件数を左右する。これらは論文の評価では現れなかった要素で、open-weight モデルの評価を再現可能にするには、応答の取り扱いと打ち切りの規則を事前登録に含めるべきである。本研究では途中で変えた点をすべて記録の notes と本文に残した。
+
+\paragraph{打ち切りの影響.}
+GLM 系 3 モデルの打ち切りにより、仮説 1 の 6 モデルのうち 1 つ（glm-5.2）と仮説 2 の全部が未判定である。これは能力の評価ではなく RIKYU での serving 速度の問題であり、別の serving 環境で実行すれば判定できる。記録は追記のみなので、後日の実行結果は同じ claim に別の結果として追加される。
 
 \section{結論}
 \label{sec:conclusion}
-実験は未実施である。
+RIKYU の推論 API で提供される open-weight モデルのうち完走した 5 つ（deepseek-v4.1-flash、kimi-k2.6、kimi-k3、qwen3.6-35b、qwen3.8-27b）は、SciGym 公開コードの Controller と評価器をそのまま用いた SciGym-small 137 件の評価で、いずれも論文 Table 1 の GPT-4.1-mini の水準に届き（Claim 1、3、4、5、6 が成立）、うち 4 つは論文の最良値を STE と RMS の両方で上回った。GLM 系 3 モデルは serving の速度の問題で期限内に評価できず、Claim 2 と仮説 2 は保留である。事前登録した予測区間は 4 モデルで下に外れており、open-weight モデルの進歩は本研究の見込みより速かった。
 
 \section*{データの利用可能性}
 記録は \airasrecordlink{record.json} にある。実験コード、環境の固定（Dockerfile と \texttt{uv.lock}）、各 run の結果と provenance は同じリポジトリに含まれる。

@@ -33,6 +33,23 @@
         ".research/results/kimi-k2.6/metrics.json": "93717778b497ec9291a60013c0863f81cac23ca198b5b60fc1349264ca9eaf7f",
         ".research/results/kimi-k2.6/tokens.json": "f747e1bdeba7ef5292cb62248548c23bc1370a63dae4da134a20548a84dd401d"
       }
+    },
+    "qwen3.6-35b": {
+      "execution_id": "8c74bbfa-b7c6-4d46-ba02-9ad688b2271a",
+      "backend": "seyval",
+      "commit_hash": "682aa5d2c37dd5c4337cad85dc04d50418c4db5d",
+      "overrides": {
+        "run_id": "qwen3.6-35b",
+        "mode": "full"
+      },
+      "parameters": {},
+      "files": {
+        ".research/results/qwen3.6-35b/eval_inputs/scigym_small.json": "ebcd1951c3ce935fc89afe2468d979e59ce2358030489ae067fa82835b30fe37",
+        ".research/results/qwen3.6-35b/evaluation/scigym_small.json": "886ff86789ae2048c27898c54d633a0ec6b82daa9d1981a380da8c2f791df9dc",
+        ".research/results/qwen3.6-35b/instances.tar.gz": "b759df66c7aafa004851dc350f999858f574422a9f97846b8bde277b58fcec9c",
+        ".research/results/qwen3.6-35b/metrics.json": "99b743f89ce0c6aa384d5aa940135ff8906de8dbac5c8a48e2d1727a1e8bf094",
+        ".research/results/qwen3.6-35b/tokens.json": "196e60c42c65baa7d54f0aa35c1edd3853e450bdad7de4fe1bfffd99ac395e2d"
+      }
     }
   }
 }

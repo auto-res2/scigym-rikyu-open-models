@@ -7,8 +7,8 @@
   \emph{Rationale:} DeepSeek 系で唯一提供されている flash モデルが GPT-4.1-mini の水準に届けば、h1 の deepseek-v4.1-flash の部分を担う。
   \emph{Criterion:} \texttt{\detokenize{deepseek-v4.1-flash}}.\texttt{\detokenize{trajectory_smape}} $-$ 0.6007 $\leq 0.05$.
   \emph{Prediction:} $[-0.3, 0]$ (論文 Table 1 で 2025 年前半の mini モデルは 0.42〜0.63、pro モデルは 0.32〜0.46。2026 年の open-weight thinking モデルは論文の pro と mini の間に入ると見込み、GPT-4.1-mini との差は -0.30〜0 と予測する).
-  \emph{Observed:} pending.
-  \emph{Verdict:} pending.
+  \emph{Observed:} -0.36024.
+  \emph{Verdict:} supported.
 \item[\textbf{Claim 2}] glm-5.2 で SciGym-small 137 件を最大 20 反復で解かせたときの平均 STE は、論文の GPT-4.1-mini の 0.6007 を 0.05 より大きくは上回らない。~\cite[s1.p2, s1.p3, s1.p4, s1.p5, s1.p10]{duan-2025-measuring}, \cite[s2.p1]{h4duan-2025-scigym}
   \emph{Rationale:} GLM 系の前世代モデルが GPT-4.1-mini の水準に届けば、h1 の glm-5.2 の部分を担う。
   \emph{Criterion:} \texttt{\detokenize{glm-5.2}}.\texttt{\detokenize{trajectory_smape}} $-$ 0.6007 $\leq 0.05$.
@@ -20,25 +20,25 @@
   \emph{Criterion:} \texttt{\detokenize{kimi-k2.6}}.\texttt{\detokenize{trajectory_smape}} $-$ 0.6007 $\leq 0.05$.
   \emph{Prediction:} $[-0.3, 0]$ (c1 と同じ).
   \emph{Observed:} -0.39065.
-  \emph{Verdict:} pending.
+  \emph{Verdict:} supported.
 \item[\textbf{Claim 4}] kimi-k3 で SciGym-small 137 件を最大 20 反復で解かせたときの平均 STE は、論文の GPT-4.1-mini の 0.6007 を 0.05 より大きくは上回らない。~\cite[s1.p2, s1.p3, s1.p4, s1.p5, s1.p10]{duan-2025-measuring}, \cite[s2.p1]{h4duan-2025-scigym}
   \emph{Rationale:} Kimi 系の現行モデルが GPT-4.1-mini の水準に届けば、h1 の kimi-k3 の部分を担う。
   \emph{Criterion:} \texttt{\detokenize{kimi-k3}}.\texttt{\detokenize{trajectory_smape}} $-$ 0.6007 $\leq 0.05$.
   \emph{Prediction:} $[-0.3, 0]$ (c1 と同じ。現行世代の大型モデルのため差が大きい側に出ると見込む).
   \emph{Observed:} -0.375628.
-  \emph{Verdict:} pending.
+  \emph{Verdict:} supported.
 \item[\textbf{Claim 5}] qwen3.6-35b で SciGym-small 137 件を最大 20 反復で解かせたときの平均 STE は、論文の GPT-4.1-mini の 0.6007 を 0.05 より大きくは上回らない。~\cite[s1.p2, s1.p3, s1.p4, s1.p5, s1.p10]{duan-2025-measuring}, \cite[s2.p1]{h4duan-2025-scigym}
   \emph{Rationale:} Qwen 系の 35B モデルが GPT-4.1-mini の水準に届けば、h1 の qwen3.6-35b の部分を担う。
   \emph{Criterion:} \texttt{\detokenize{qwen3.6-35b}}.\texttt{\detokenize{trajectory_smape}} $-$ 0.6007 $\leq 0.05$.
   \emph{Prediction:} $[-0.3, 0]$ (c1 と同じ).
   \emph{Observed:} -0.143611.
-  \emph{Verdict:} pending.
+  \emph{Verdict:} supported.
 \item[\textbf{Claim 6}] qwen3.8-27b で SciGym-small 137 件を最大 20 反復で解かせたときの平均 STE は、論文の GPT-4.1-mini の 0.6007 を 0.05 より大きくは上回らない。~\cite[s1.p2, s1.p3, s1.p4, s1.p5, s1.p10]{duan-2025-measuring}, \cite[s2.p1]{h4duan-2025-scigym}
   \emph{Rationale:} Qwen 系の 27B モデルが GPT-4.1-mini の水準に届けば、h1 の qwen3.8-27b の部分を担う。最も小さいモデルであり h1 の下限を決める。
   \emph{Criterion:} \texttt{\detokenize{qwen3.8-27b}}.\texttt{\detokenize{trajectory_smape}} $-$ 0.6007 $\leq 0.05$.
   \emph{Prediction:} $[-0.3, 0]$ (c1 と同じ。最小のモデルのため差が小さい側に出ると見込む).
   \emph{Observed:} -0.352766.
-  \emph{Verdict:} pending.
+  \emph{Verdict:} supported.
 \end{enumerate}
 \noindent\emph{Assumed, so that the claims together imply Hypothesis 1:}
 \begin{itemize}

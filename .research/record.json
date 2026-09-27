@@ -1060,6 +1060,117 @@
               "label": "qwen3.8-27b"
             }
           ]
+        },
+        {
+          "key": "table1",
+          "caption": "SciGym-small 137 件における RIKYU の open-weight 5 モデルの平均 STE（低いほど良い）、論文 Table 1 の GPT-4.1-mini（0.6007）との差、Reaction Matching Score の F1（modifier なし / あり、高いほど良い）、Network Topology Score の F1。glm-5.2、glm-5.3、glm-5.3-flash の 3 run は期限内に終わらず打ち切ったため行がない。",
+          "columns": [
+            {
+              "header": "STE $\\downarrow$",
+              "ref_path": "trajectory_smape",
+              "round": 4
+            },
+            {
+              "header": "$\\Delta$ STE vs GPT-4.1-mini",
+              "ref_path": "trajectory_smape",
+              "reference": {
+                "passage": "s1.p5",
+                "values": {
+                  "deepseek-v4.1-flash": 0.6007,
+                  "kimi-k2.6": 0.6007,
+                  "kimi-k3": 0.6007,
+                  "qwen3.6-35b": 0.6007,
+                  "qwen3.8-27b": 0.6007
+                }
+              },
+              "round": 4
+            },
+            {
+              "header": "RMS w/o mod. F1",
+              "ref_path": "reaction_f1",
+              "round": 4
+            },
+            {
+              "header": "RMS w/ mod. F1",
+              "ref_path": "reaction_f1_with_modifiers",
+              "round": 4
+            },
+            {
+              "header": "NTS F1",
+              "ref_path": "topology_f1",
+              "round": 4
+            }
+          ],
+          "rows": [
+            {
+              "run_id": "deepseek-v4.1-flash",
+              "label": "deepseek-v4.1-flash"
+            },
+            {
+              "run_id": "kimi-k2.6",
+              "label": "kimi-k2.6"
+            },
+            {
+              "run_id": "kimi-k3",
+              "label": "kimi-k3"
+            },
+            {
+              "run_id": "qwen3.6-35b",
+              "label": "qwen3.6-35b"
+            },
+            {
+              "run_id": "qwen3.8-27b",
+              "label": "qwen3.8-27b"
+            }
+          ]
+        },
+        {
+          "key": "tokens",
+          "caption": "各 run の評価件数、有効な SBML が提出された件数、トークン消費。出力トークンには thinking を含む。入力トークンには本文が空だった応答の呼び直し分を含む。",
+          "columns": [
+            {
+              "header": "n\\_instances",
+              "ref_path": "n_instances",
+              "round": 0
+            },
+            {
+              "header": "n\\_valid\\_submissions",
+              "ref_path": "n_valid_submissions",
+              "round": 0
+            },
+            {
+              "header": "入力トークン",
+              "ref_path": "input_tokens",
+              "round": 0
+            },
+            {
+              "header": "出力トークン",
+              "ref_path": "output_tokens",
+              "round": 0
+            }
+          ],
+          "rows": [
+            {
+              "run_id": "deepseek-v4.1-flash",
+              "label": "deepseek-v4.1-flash"
+            },
+            {
+              "run_id": "kimi-k2.6",
+              "label": "kimi-k2.6"
+            },
+            {
+              "run_id": "kimi-k3",
+              "label": "kimi-k3"
+            },
+            {
+              "run_id": "qwen3.6-35b",
+              "label": "qwen3.6-35b"
+            },
+            {
+              "run_id": "qwen3.8-27b",
+              "label": "qwen3.8-27b"
+            }
+          ]
         }
       ],
       "notes": [

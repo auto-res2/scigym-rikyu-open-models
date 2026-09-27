@@ -1,1 +1,3 @@
 model: glm-5.3
+workers: 48
+instance_timeout: 43200  # 約 15 tok/s なので 20 反復に 4 時間では足りない

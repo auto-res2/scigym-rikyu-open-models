@@ -5,6 +5,7 @@ import json
 import os
 import sys
 import sysconfig
+import time
 from pathlib import Path
 
 # libroadrunner は libpython を動的に探すので、ローダのパスに無い環境（uv 管理の Python）では先読みする
@@ -25,7 +26,7 @@ class OpenAICompatible(LLM):
 
     def initialize(self, base_url):
         self.client = OpenAI(
-            api_key=os.environ["RIKYU_API_KEY"], base_url=base_url, max_retries=5
+            api_key=os.environ["RIKYU_API_KEY"], base_url=base_url, max_retries=5, timeout=3600  # 15 tok/s のモデルは 1 応答に 10 分を超える
         )
         self.messages = [{"role": "system", "content": self.system_prompt}]
 
@@ -37,21 +38,38 @@ class OpenAICompatible(LLM):
 
     def get_response(self, user_message):
         self.add_message("user", user_message)
-        for _ in range(3):  # thinking モデルは本文が空で返ることがある。1 件を最初からやり直すより呼び直しが安い
+        max_tokens = self.max_length
+        for attempt in range(30):
             try:
                 response = self.client.chat.completions.create(
                     model=self.model_name,
                     messages=self.messages,
-                    max_tokens=self.max_length,
+                    max_tokens=max_tokens,
                     temperature=self.temperature,
                 )
             except openai.APIStatusError as exc:
                 if exc.status_code == 402:
                     sys.exit(BUDGET_EXCEEDED)
-                raise
-            text = response.choices[0].message.content
+                if exc.status_code < 500 or attempt == 29:
+                    raise
+                print(f"gateway {exc.status_code}; retry {attempt + 1} after 60s", flush=True)  # 上流の一時的な不調は待って呼び直す
+                time.sleep(60)
+                continue
+            choice = response.choices[0]
+            text = choice.message.content
             if isinstance(text, str) and len(text) > 0:
                 break
+            usage = response.usage.model_dump() if response.usage else None
+            print(f"empty response: finish_reason={choice.finish_reason} max_tokens={max_tokens} usage={usage}", flush=True)
+            with open(self.empty_log, "a") as f:  # 本文が空の生応答を残す（gateway の reasoning 解析のずれを疑っている）
+                f.write(json.dumps(response.model_dump(), ensure_ascii=False) + "\n")
+            if choice.finish_reason == "length":  # thinking で使い切った。上限を上げて呼び直す
+                max_tokens = min(max_tokens * 2, 131072)
+            else:  # 本文が空で reasoning 側で終わっている応答は、コードブロックまで reasoning に入っている。その文を本文として返す
+                reasoning = getattr(choice.message, "reasoning_content", None) or getattr(choice.message, "reasoning", None)
+                if isinstance(reasoning, str) and len(reasoning) > 0:
+                    text = reasoning
+                    break
         assert isinstance(text, str) and len(text) > 0, "empty response"
         self.add_message("assistant", text)
         usage = response.usage
@@ -74,6 +92,7 @@ def main():
         eval_debug_rounds=cfg["eval_debug_rounds"],
         temperature=cfg["temperature"],
     )
+    OpenAICompatible.empty_log = out / "empty_responses.jsonl"
     llm = OpenAICompatible(
         model_name=cfg["model"],
         api_key="",

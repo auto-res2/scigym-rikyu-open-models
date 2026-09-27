@@ -706,6 +706,12 @@
             }
           ]
         }
+      ],
+      "notes": [
+        "2026-09-27 15:20 JST: glm-5.2 の full run（実行 cd0cfaf4、137 件中 13 件完走）は、RIKYU の推論 API での GLM 系の生成速度（glm-5.3 で約 15 tok/s、glm-5.2 で約 55 tok/s）と断続的な 502 のため期限内に終わる見込みが立たず、利用者の判断で打ち切った。Claim 2 は結果なしのまま残し、途中までの件で集計はしない。",
+        "qwen3.6-35b の推論 API は 2026-09-26 08:00 頃から 27 日 16:00 頃まで 1 語の要求にも応答せず、full run はその後に投げた（実行 8c74bbfa）。",
+        "thinking を出力するモデル（特に kimi-k2.6）は、content が空で reasoning_content にコードブロックまで含む本文が入った応答を返すことがある（finish_reason=stop）。実験コードはこの応答を最初の 1 回で reasoning_content の文を本文として Controller に渡した。上限（max_tokens）で切れた場合は上限を倍にして呼び直した。生の空応答は各件の empty_responses.jsonl として instances.tar.gz に残している。",
+        "deepseek-v4.1-flash の最初の full run（実行 ebf2eff0）は 136 件が完走し、BIOMD0000000783 だけが 3 回の試行とも LLM のコードが ODE 計算の中で止まり 4 時間の上限で打ち切られたため、実験コードが run 全体を失敗と判定して評価に進まなかった。公式の規約では有効な提出がない件は不完全モデルで採点されるので、136 件の出力をそのまま（resume/deepseek-v4.1-flash/instances.tar.gz として commit し）引き継ぎ、打ち切りの 1 件を提出なしとして評価だけを行う run を投げ直した。LLM の呼び出しはやり直していない。"
       ]
     },
     {

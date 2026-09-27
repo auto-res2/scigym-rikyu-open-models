@@ -16,6 +16,23 @@
         ".research/results/kimi-k3/metrics.json": "0bcfbee546aeb71c2538a1e51d0e2c448a98e201c77c95d73c09003954932a96",
         ".research/results/kimi-k3/tokens.json": "ac8101778dab758aec1ecce549adfcd535fa4617afc7bc439f0a844dd1a96c08"
       }
+    },
+    "kimi-k2.6": {
+      "execution_id": "60c3267c-0e6c-46b1-8bd1-720248661067",
+      "backend": "seyval",
+      "commit_hash": "00dd7f7900549b00aac71f53c4a454d9887d96c7",
+      "overrides": {
+        "run_id": "kimi-k2.6",
+        "mode": "full"
+      },
+      "parameters": {},
+      "files": {
+        ".research/results/kimi-k2.6/eval_inputs/scigym_small.json": "1481e74e9723b33459b9f48647194b8970134957c02343f52a92fc3dacf499cf",
+        ".research/results/kimi-k2.6/evaluation/scigym_small.json": "d67f007270c87c9504f48fb637566bbd57a79279a8720fce93cce68d8fc630f7",
+        ".research/results/kimi-k2.6/instances.tar.gz": "3e585aae50faa41d109bd347b709ae71793d2c4ae7f740afb0ae5b37428d574a",
+        ".research/results/kimi-k2.6/metrics.json": "93717778b497ec9291a60013c0863f81cac23ca198b5b60fc1349264ca9eaf7f",
+        ".research/results/kimi-k2.6/tokens.json": "f747e1bdeba7ef5292cb62248548c23bc1370a63dae4da134a20548a84dd401d"
+      }
     }
   }
 }

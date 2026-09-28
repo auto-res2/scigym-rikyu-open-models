@@ -1384,6 +1384,94 @@
               "label": "qwen3.8-27b"
             }
           ]
+        },
+        {
+          "key": "table1",
+          "caption": "SciGym-small 137 件における RIKYU の open-weight 5 モデルの結果。STE（低いほど良い）、論文 Table 1 の GPT-4.1-mini（0.6007）との差、Reaction Matching Score の適合率 P・再現率 R・F1（w/: modifier あり、w/o: modifier なし。高いほど良い）、Network Topology Score の F1、有効な SBML が提出された件数 n\\_valid（137 件中）。小数第 3 位まで表示する。glm-5.2、glm-5.3、glm-5.3-flash の 3 run は期限内に終わらず打ち切ったため行がない。",
+          "columns": [
+            {
+              "header": "STE $\\downarrow$",
+              "ref_path": "trajectory_smape",
+              "round": 3
+            },
+            {
+              "header": "$\\Delta$ vs mini",
+              "ref_path": "trajectory_smape",
+              "reference": {
+                "passage": "s1.p5",
+                "values": {
+                  "deepseek-v4.1-flash": 0.6007,
+                  "kimi-k2.6": 0.6007,
+                  "kimi-k3": 0.6007,
+                  "qwen3.6-35b": 0.6007,
+                  "qwen3.8-27b": 0.6007
+                }
+              },
+              "round": 3
+            },
+            {
+              "header": "w/ P",
+              "ref_path": "reaction_precision_with_modifiers",
+              "round": 3
+            },
+            {
+              "header": "w/ R",
+              "ref_path": "reaction_recall_with_modifiers",
+              "round": 3
+            },
+            {
+              "header": "w/ F1",
+              "ref_path": "reaction_f1_with_modifiers",
+              "round": 3
+            },
+            {
+              "header": "w/o P",
+              "ref_path": "reaction_precision",
+              "round": 3
+            },
+            {
+              "header": "w/o R",
+              "ref_path": "reaction_recall",
+              "round": 3
+            },
+            {
+              "header": "w/o F1",
+              "ref_path": "reaction_f1",
+              "round": 3
+            },
+            {
+              "header": "NTS F1",
+              "ref_path": "topology_f1",
+              "round": 3
+            },
+            {
+              "header": "n\\_valid",
+              "ref_path": "n_valid_submissions",
+              "round": 0
+            }
+          ],
+          "rows": [
+            {
+              "run_id": "deepseek-v4.1-flash",
+              "label": "deepseek-v4.1-flash"
+            },
+            {
+              "run_id": "kimi-k2.6",
+              "label": "kimi-k2.6"
+            },
+            {
+              "run_id": "kimi-k3",
+              "label": "kimi-k3"
+            },
+            {
+              "run_id": "qwen3.6-35b",
+              "label": "qwen3.6-35b"
+            },
+            {
+              "run_id": "qwen3.8-27b",
+              "label": "qwen3.8-27b"
+            }
+          ]
         }
       ],
       "notes": [

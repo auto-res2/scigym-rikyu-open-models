@@ -137,6 +137,16 @@
               "text_sha256": "f84e49af3e80211db6b108b2c251f859533d34576bbead8d197db4a5a672e5b0",
               "model": "gpt-4.1",
               "supported": true
+            },
+            {
+              "text_sha256": "8cea5b328d4fc68f396cf806e72c395f92814e4947bbcbfeeb35535af89034b9",
+              "model": "gpt-4.1",
+              "supported": true
+            },
+            {
+              "text_sha256": "e16649734baa0b9af39866410449041ccedb08eaa20f2949db45e9690d8fa29d",
+              "model": "gpt-4.1",
+              "supported": true
             }
           ]
         },

@@ -126,6 +126,12 @@
               "model": "gpt-4.1",
               "supported": true,
               "reason": "The citing text faithfully reports the Gemini-2.5-Pro SCIGYM Table 1 Simulation Trajectory Error (0.3212), which matches the quoted passage and its context."
+            },
+            {
+              "text_sha256": "3e16a5e523f6c2ba4b4def6770819c5fbd5e5eac57ea4a589f61f9b5bb62dd53",
+              "model": "gpt-4.1",
+              "supported": true,
+              "reason": "The citing text accurately reproduces the STE value (0.6007) for GPT-4.1-mini from the quoted table and attributes it properly, consistent with the context and units of comparison."
             }
           ]
         },

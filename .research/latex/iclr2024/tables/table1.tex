@@ -3,17 +3,17 @@
 % and fails on any difference, so manual edits always surface.
 \begin{table}[t]
 \centering
-\caption{SciGym-small 137 件における RIKYU の open-weight 5 モデルの平均 STE（低いほど良い）、論文 Table 1 の GPT-4.1-mini（0.6007）との差、Reaction Matching Score の F1（modifier なし / あり、高いほど良い）、Network Topology Score の F1。glm-5.2、glm-5.3、glm-5.3-flash の 3 run は期限内に終わらず打ち切ったため行がない。}
+\caption{SciGym-small 137 件における RIKYU の open-weight 5 モデルの結果。STE（低いほど良い）、論文 Table 1 の GPT-4.1-mini（0.6007）との差、Reaction Matching Score の適合率 P・再現率 R・F1（modifier あり / なし、高いほど良い）、Network Topology Score の F1、有効な SBML が提出された件数（137 件中）。glm-5.2、glm-5.3、glm-5.3-flash の 3 run は期限内に終わらず打ち切ったため行がない。}
 \label{tab:table1}
-\begin{tabular}{lrrrrr}
+\begin{tabular}{lrrrrrrrrrr}
 \hline
- & STE $\downarrow$ & $\Delta$ STE vs GPT-4.1-mini & RMS w/o mod. F1 & RMS w/ mod. F1 & NTS F1 \\
+ & STE $\downarrow$ & $\Delta$ vs mini & P & R & F1 & P & R & F1 & NTS F1 & n\_valid \\
 \hline
-deepseek-v4.1-flash & 0.2405 & -0.3602 & 0.4542 & 0.2746 & 0.5698 \\
-kimi-k2.6 & 0.2100 & -0.3907 & 0.4294 & 0.2651 & 0.7434 \\
-kimi-k3 & 0.2251 & -0.3756 & 0.4915 & 0.2924 & 0.5310 \\
-qwen3.6-35b & 0.4571 & -0.1436 & 0.2840 & 0.1465 & 0.6277 \\
-qwen3.8-27b & 0.2479 & -0.3528 & 0.4145 & 0.2517 & 0.6119 \\
+deepseek-v4.1-flash & 0.2405 & -0.3602 & 0.2809 & 0.2817 & 0.2746 & 0.4557 & 0.4718 & 0.4542 & 0.5698 & 134 \\
+kimi-k2.6 & 0.2100 & -0.3907 & 0.2692 & 0.2718 & 0.2651 & 0.4271 & 0.4555 & 0.4294 & 0.7434 & 137 \\
+kimi-k3 & 0.2251 & -0.3756 & 0.3068 & 0.2909 & 0.2924 & 0.4997 & 0.5032 & 0.4915 & 0.5310 & 130 \\
+qwen3.6-35b & 0.4571 & -0.1436 & 0.1528 & 0.1494 & 0.1465 & 0.2869 & 0.2974 & 0.2840 & 0.6277 & 129 \\
+qwen3.8-27b & 0.2479 & -0.3528 & 0.2652 & 0.2471 & 0.2517 & 0.4145 & 0.4294 & 0.4145 & 0.6119 & 129 \\
 \hline
 \end{tabular}
 \end{table}

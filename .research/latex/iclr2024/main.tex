@@ -87,9 +87,9 @@ sanity は 1 件（BIOMD0000000027）を 2 反復で走らせて配管を確か�
 
 \section{結果}
 \label{sec:results}
-表~\ref{tab:table1} に、完走した 5 モデルの SciGym-small 137 件に対する平均 STE、論文 Table 1 の GPT-4.1-mini（\unverified{0.6007}）\cite[s1.p5]{duan-2025-measuring} との差、RMS の F1（modifier なし / あり）、NTS の F1 を示す。各値は評価層 \texttt{scigym\_small} のレポートから記録経由で流し込んだものである。
+表~\ref{tab:table1} に、完走した 5 モデルの SciGym-small 137 件に対する平均 STE、論文 Table 1 の GPT-4.1-mini（\unverified{0.6007}）\cite[s1.p5]{duan-2025-measuring} との差、RMS の適合率・再現率・F1（modifier あり / なし）、有効な SBML が提出された件数を示す。NTS の F1 は本文中に記す。各値は評価層 \texttt{scigym\_small} のレポートから記録経由で流し込んだものである。
 
-{\small\input{tables/table1.tex}}
+{\scriptsize\setlength{\tabcolsep}{2.5pt}\input{tables/table1.tex}}
 
 \paragraph{主張の判定.}
 仮説 1 の各主張の反証線は「（当該モデルの平均 STE）$-$ \unverified{0.6007} $\le 0.05$」である（第\ref{sec:hypothesis}節）。平均 STE は kimi-k2.6 が \airasval{kimi-k2.6.trajectory_smape}、kimi-k3 が \airasval{kimi-k3.trajectory_smape}、deepseek-v4.1-flash が \airasval{deepseek-v4.1-flash.trajectory_smape}、qwen3.8-27b が \airasval{qwen3.8-27b.trajectory_smape}、qwen3.6-35b が \airasval{qwen3.6-35b.trajectory_smape} であり、Claim 1、3、4、5、6 はいずれも基準を満たした。GPT-4.1-mini との差は $-0.39$ から $-0.14$ で、事前に宣言した予測区間 $[-0.30, 0]$ を kimi-k2.6、kimi-k3、deepseek-v4.1-flash、qwen3.8-27b の 4 モデルで下に外れた。すなわち、これらのモデルは予測より大きく GPT-4.1-mini を引き離し、論文 Table 1 で最良だった Gemini-2.5-Pro の \unverified{0.3212} \cite[s1.p5]{duan-2025-measuring} も下回った。qwen3.6-35b だけが予測区間の内側で、5 モデルの中では最も弱い。

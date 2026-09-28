@@ -132,6 +132,11 @@
               "model": "gpt-4.1",
               "supported": true,
               "reason": "The citing text accurately reproduces the STE value (0.6007) for GPT-4.1-mini from the quoted table and attributes it properly, consistent with the context and units of comparison."
+            },
+            {
+              "text_sha256": "f84e49af3e80211db6b108b2c251f859533d34576bbead8d197db4a5a672e5b0",
+              "model": "gpt-4.1",
+              "supported": true
             }
           ]
         },

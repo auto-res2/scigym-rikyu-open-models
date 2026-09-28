@@ -91,6 +91,35 @@ sanity は 1 件（BIOMD0000000027）を 2 反復で走らせて配管を確か�
 
 {\scriptsize\setlength{\tabcolsep}{2.5pt}\input{tables/table1.tex}}
 
+表~\ref{tab:comparison} は、論文 Table 1 の 6 モデルの値 \cite[s1.p5]{duan-2025-measuring} と本研究の 5 モデルの値を同じ列構成で並べたものである。論文の値は引用としての転記で未検証の印を付け、本研究の値は記録から流し込んだものをそのまま表示している。
+
+\begin{table}[t]
+  \centering
+  \caption{論文 Table 1（Duan et al. \cite[s1.p5]{duan-2025-measuring}、SciGym-small 137 件、各モデル 1 回実行）と本研究の値の対比。STE は低いほど、RMS の P・R・F1 は高いほど良い。w/ は modifier あり、w/o は modifier なし。上段 6 行は論文からの転記（未検証）、下段 5 行は本研究の記録由来の値で、有効提出は有効な SBML が提出された件数（137 件中。論文は報告していない）。}
+  \label{tab:comparison}
+  {\scriptsize\setlength{\tabcolsep}{2.5pt}
+  \begin{tabular}{lrrrrrrrr}
+    \hline
+    & STE $\downarrow$ & w/ P & w/ R & w/ F1 & w/o P & w/o R & w/o F1 & 有効提出 \\
+    \hline
+    \multicolumn{9}{l}{\emph{論文 Table 1}} \\
+    Gemini-2.5-Flash & \unverified{0.4181} & \unverified{0.1527} & \unverified{0.1071} & \unverified{0.1217} & \unverified{0.2399} & \unverified{0.1839} & \unverified{0.2005} & --- \\
+    GPT-4.1-mini & \unverified{0.6007} & \unverified{0.1516} & \unverified{0.1253} & \unverified{0.1320} & \unverified{0.2530} & \unverified{0.2313} & \unverified{0.2322} & --- \\
+    Claude-3.5-Haiku & \unverified{0.6281} & \unverified{0.0858} & \unverified{0.0421} & \unverified{0.0530} & \unverified{0.1454} & \unverified{0.0805} & \unverified{0.0987} & --- \\
+    Gemini-2.5-Pro & \unverified{0.3212} & \unverified{0.2138} & \unverified{0.1664} & \unverified{0.1817} & \unverified{0.3781} & \unverified{0.3219} & \unverified{0.3383} & --- \\
+    GPT-4.1 & \unverified{0.4611} & \unverified{0.2067} & \unverified{0.1597} & \unverified{0.1740} & \unverified{0.3517} & \unverified{0.2888} & \unverified{0.3038} & --- \\
+    Claude-3.7-Sonnet & \unverified{0.3615} & \unverified{0.1780} & \unverified{0.1698} & \unverified{0.1688} & \unverified{0.3160} & \unverified{0.3170} & \unverified{0.3047} & --- \\
+    \hline
+    \multicolumn{9}{l}{\emph{本研究（RIKYU の open-weight モデル）}} \\
+    deepseek-v4.1-flash & \airasval{deepseek-v4.1-flash.trajectory_smape} & \airasval{deepseek-v4.1-flash.reaction_precision_with_modifiers} & \airasval{deepseek-v4.1-flash.reaction_recall_with_modifiers} & \airasval{deepseek-v4.1-flash.reaction_f1_with_modifiers} & \airasval{deepseek-v4.1-flash.reaction_precision} & \airasval{deepseek-v4.1-flash.reaction_recall} & \airasval{deepseek-v4.1-flash.reaction_f1} & \airasval{deepseek-v4.1-flash.n_valid_submissions} \\
+    kimi-k2.6 & \airasval{kimi-k2.6.trajectory_smape} & \airasval{kimi-k2.6.reaction_precision_with_modifiers} & \airasval{kimi-k2.6.reaction_recall_with_modifiers} & \airasval{kimi-k2.6.reaction_f1_with_modifiers} & \airasval{kimi-k2.6.reaction_precision} & \airasval{kimi-k2.6.reaction_recall} & \airasval{kimi-k2.6.reaction_f1} & \airasval{kimi-k2.6.n_valid_submissions} \\
+    kimi-k3 & \airasval{kimi-k3.trajectory_smape} & \airasval{kimi-k3.reaction_precision_with_modifiers} & \airasval{kimi-k3.reaction_recall_with_modifiers} & \airasval{kimi-k3.reaction_f1_with_modifiers} & \airasval{kimi-k3.reaction_precision} & \airasval{kimi-k3.reaction_recall} & \airasval{kimi-k3.reaction_f1} & \airasval{kimi-k3.n_valid_submissions} \\
+    qwen3.6-35b & \airasval{qwen3.6-35b.trajectory_smape} & \airasval{qwen3.6-35b.reaction_precision_with_modifiers} & \airasval{qwen3.6-35b.reaction_recall_with_modifiers} & \airasval{qwen3.6-35b.reaction_f1_with_modifiers} & \airasval{qwen3.6-35b.reaction_precision} & \airasval{qwen3.6-35b.reaction_recall} & \airasval{qwen3.6-35b.reaction_f1} & \airasval{qwen3.6-35b.n_valid_submissions} \\
+    qwen3.8-27b & \airasval{qwen3.8-27b.trajectory_smape} & \airasval{qwen3.8-27b.reaction_precision_with_modifiers} & \airasval{qwen3.8-27b.reaction_recall_with_modifiers} & \airasval{qwen3.8-27b.reaction_f1_with_modifiers} & \airasval{qwen3.8-27b.reaction_precision} & \airasval{qwen3.8-27b.reaction_recall} & \airasval{qwen3.8-27b.reaction_f1} & \airasval{qwen3.8-27b.n_valid_submissions} \\
+    \hline
+  \end{tabular}}
+\end{table}
+
 \paragraph{主張の判定.}
 仮説 1 の各主張の反証線は「（当該モデルの平均 STE）$-$ \unverified{0.6007} $\le 0.05$」である（第\ref{sec:hypothesis}節）。平均 STE は kimi-k2.6 が \airasval{kimi-k2.6.trajectory_smape}、kimi-k3 が \airasval{kimi-k3.trajectory_smape}、deepseek-v4.1-flash が \airasval{deepseek-v4.1-flash.trajectory_smape}、qwen3.8-27b が \airasval{qwen3.8-27b.trajectory_smape}、qwen3.6-35b が \airasval{qwen3.6-35b.trajectory_smape} であり、Claim 1、3、4、5、6 はいずれも基準を満たした。GPT-4.1-mini との差は $-0.39$ から $-0.14$ で、事前に宣言した予測区間 $[-0.30, 0]$ を kimi-k2.6、kimi-k3、deepseek-v4.1-flash、qwen3.8-27b の 4 モデルで下に外れた。すなわち、これらのモデルは予測より大きく GPT-4.1-mini を引き離し、論文 Table 1 で最良だった Gemini-2.5-Pro の \unverified{0.3212} \cite[s1.p5]{duan-2025-measuring} も下回った。qwen3.6-35b だけが予測区間の内側で、5 モデルの中では最も弱い。
 

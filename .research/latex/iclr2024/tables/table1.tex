@@ -3,17 +3,17 @@
 % and fails on any difference, so manual edits always surface.
 \begin{table}[t]
 \centering
-\caption{SciGym-small 137 件における RIKYU の open-weight 5 モデルの結果。STE（低いほど良い）、論文 Table 1 の GPT-4.1-mini（0.6007）との差、Reaction Matching Score の適合率 P・再現率 R・F1（w/: modifier あり、w/o: modifier なし。高いほど良い）、Network Topology Score の F1、有効な SBML が提出された件数 n\_valid（137 件中）。小数第 3 位まで表示する。glm-5.2、glm-5.3、glm-5.3-flash の 3 run は期限内に終わらず打ち切ったため行がない。}
+\caption{SciGym-small 137 件における RIKYU の open-weight 5 モデルの結果。STE（低いほど良い）、論文 Table 1 の GPT-4.1-mini（0.6007）との差、Reaction Matching Score の適合率 P・再現率 R・F1（w/: modifier あり、w/o: modifier なし。高いほど良い）、有効な SBML が提出された件数 n\_valid（137 件中）。小数第 3 位まで表示する。glm-5.2、glm-5.3、glm-5.3-flash の 3 run は期限内に終わらず打ち切ったため行がない。}
 \label{tab:table1}
-\begin{tabular}{lrrrrrrrrrr}
+\begin{tabular}{lrrrrrrrrr}
 \hline
- & STE $\downarrow$ & $\Delta$ vs mini & w/ P & w/ R & w/ F1 & w/o P & w/o R & w/o F1 & NTS F1 & n\_valid \\
+ & STE $\downarrow$ & $\Delta$ vs mini & w/ P & w/ R & w/ F1 & w/o P & w/o R & w/o F1 & n\_valid \\
 \hline
-deepseek-v4.1-flash & 0.240 & -0.360 & 0.281 & 0.282 & 0.275 & 0.456 & 0.472 & 0.454 & 0.570 & 134 \\
-kimi-k2.6 & 0.210 & -0.391 & 0.269 & 0.272 & 0.265 & 0.427 & 0.455 & 0.429 & 0.743 & 137 \\
-kimi-k3 & 0.225 & -0.376 & 0.307 & 0.291 & 0.292 & 0.500 & 0.503 & 0.491 & 0.531 & 130 \\
-qwen3.6-35b & 0.457 & -0.144 & 0.153 & 0.149 & 0.146 & 0.287 & 0.297 & 0.284 & 0.628 & 129 \\
-qwen3.8-27b & 0.248 & -0.353 & 0.265 & 0.247 & 0.252 & 0.414 & 0.429 & 0.414 & 0.612 & 129 \\
+deepseek-v4.1-flash & 0.240 & -0.360 & 0.281 & 0.282 & 0.275 & 0.456 & 0.472 & 0.454 & 134 \\
+kimi-k2.6 & 0.210 & -0.391 & 0.269 & 0.272 & 0.265 & 0.427 & 0.455 & 0.429 & 137 \\
+kimi-k3 & 0.225 & -0.376 & 0.307 & 0.291 & 0.292 & 0.500 & 0.503 & 0.491 & 130 \\
+qwen3.6-35b & 0.457 & -0.144 & 0.153 & 0.149 & 0.146 & 0.287 & 0.297 & 0.284 & 129 \\
+qwen3.8-27b & 0.248 & -0.353 & 0.265 & 0.247 & 0.252 & 0.414 & 0.429 & 0.414 & 129 \\
 \hline
 \end{tabular}
 \end{table}
